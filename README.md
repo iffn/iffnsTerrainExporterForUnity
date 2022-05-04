@@ -1,6 +1,6 @@
 # iffnsTerrainExporterForUnity
 
-Adds an editor tool to convert your Unity terrain into a mesh to either add it to the scene or export it as an OBJ file.
+Adds an editor tool to convert your Unity terrain into a mesh to either add it to the scene or to export it as an OBJ file.
  
 The tool can be found in the Menu bar in: Tools / iffnsStuff / TerrainToMeshConverter 
  
