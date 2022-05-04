@@ -109,9 +109,9 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
             {
                 for (int y = 0; y < heightMapSize; y += Skips + 1)
                 {
-                    float height = terrainData.GetHeight(y, x);
+                    float height = terrainData.GetHeight(x, y);
 
-                    Vector3 vector = new Vector3(y * gridSize.y, height, x * gridSize.x);
+                    Vector3 vector = new Vector3(x * gridSize.x, height, y * gridSize.y);
 
                     vertices.Add(vector);
 
@@ -131,11 +131,11 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
                     int D = outputVerticesCount * (x + 1) + y;
 
                     triangles.Add(A);
-                    triangles.Add(C);
                     triangles.Add(B);
-                    triangles.Add(A);
-                    triangles.Add(D);
                     triangles.Add(C);
+                    triangles.Add(A);
+                    triangles.Add(C);
+                    triangles.Add(D);
                 }
             }
         }
