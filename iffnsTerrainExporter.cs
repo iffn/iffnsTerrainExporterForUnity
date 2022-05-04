@@ -86,7 +86,7 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
         void UpdateCount()
         {
             vertexCount = vertices.Count;
-            triangleCount = triangles.Count;
+            triangleCount = triangles.Count / 3;
         }
 
         void GenerateData()

@@ -15,7 +15,7 @@ Does not support
 - Holes
 - Automatic addition of the lost edge points which occur depending on the skip invervall
  
-![image](https://user-images.githubusercontent.com/18383974/166700574-8357b307-8d80-4538-a914-5579d873750e.png)
+![image](https://user-images.githubusercontent.com/18383974/166719939-b091aded-0595-4c29-93ba-113cf76c7ff8.png)
 
 
 Add this submodule with the following git command
