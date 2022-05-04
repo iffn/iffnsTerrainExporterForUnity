@@ -11,7 +11,6 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
     {
         Terrain linkedTerrain;
         
-        string FileNameWithoutEnding;
         int Skips;
 
         List<Vector3> vertices = new List<Vector3>();
@@ -21,7 +20,7 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
         int vertexCount = -1;
         int triangleCount = -1;
 
-        [MenuItem("Tools/iffnsStuff/TerrainToMeshConverter")]
+        [MenuItem("Tools/iffnsStuff/TerrainExporter")]
         public static void ShowWindow()
         {
             EditorWindow.GetWindow(typeof(iffnsTerrainExporter));
@@ -187,7 +186,6 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
             terrainMesh.transform.rotation = linkedTerrain.transform.rotation;
 
             MeshRenderer renderer = terrainMesh.AddComponent<MeshRenderer>();
-            
 
             MeshFilter MeshFilter = terrainMesh.AddComponent<MeshFilter>();
 
@@ -221,7 +219,6 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
             mesh.RecalculateTangents();
             mesh.RecalculateBounds();
         }
-
 
         public enum UpDirection
         {
