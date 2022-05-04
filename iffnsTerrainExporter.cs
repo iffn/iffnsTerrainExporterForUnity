@@ -80,6 +80,13 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
                 }
 
                 EditorGUILayout.HelpBox(message: "Exported meshes are added to the Streaming asset folder", type: MessageType.None);
+
+                EditorGUILayout.HelpBox(
+                    "Notes:" + System.Environment.NewLine +
+                    "- You need to tab out and back into Unity for it to recognize newly created files and folders. " + System.Environment.NewLine +
+                    "- If you want to look at the mesh in Unity, you need to move it out of the Streaming Assets forlder." + System.Environment.NewLine +
+                    "- Players will have access to the Streaming asset folder when you build your game."
+                    , type: MessageType.Info);
             }
         }
 
