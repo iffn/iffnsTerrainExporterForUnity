@@ -72,7 +72,7 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
                     UpdateCount();
                 }
 
-                if (GUILayout.Button("Export as mesh"))
+                if (GUILayout.Button("Export as mesh as obj"))
                 {
                     GenerateData();
                     ExportAsMesh();
