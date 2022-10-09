@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEditor;
+using iffnsStuff.iffnsUnityTools.CastleBuilderTools.CastleImporter;
 
 namespace iffnsStuff.iffnsUnityTools.Exporters
 {
@@ -20,10 +21,10 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
         int vertexCount = -1;
         int triangleCount = -1;
 
-        [MenuItem("Tools/iffnsStuff/TerrainExporter")]
+        [MenuItem("Tools/iffnsStuff/WorldBuildingTools/TerrainExporter")]
         public static void ShowWindow()
         {
-            EditorWindow.GetWindow(typeof(iffnsTerrainExporter));
+            GetWindow(t: typeof(iffnsTerrainExporter), utility: false, title: "Terrain exporter");
         }
 
         void OnGUI()
@@ -39,7 +40,7 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
                true) as Terrain;
 
             Skips = EditorGUILayout.IntField(label: "Skips", value: Skips);
-            EditorGUILayout.HelpBox(message: "Skipping allows to reduce the ammount of verticies of the mesh by only using every nth line. Some points may be lost at the edge.", type: MessageType.None);
+            EditorGUILayout.HelpBox(message: "Skipping allows to reduce the ammount of verticies of the mesh by only using every nth line. Some points may be lost at the edge. To avoid skips, use 2^n-1", type: MessageType.None);
 
             if(linkedTerrain != null)
             {
@@ -86,6 +87,23 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
                     "- If you want to look at the mesh in Unity, you need to move it out of the Streaming Assets forlder." + System.Environment.NewLine +
                     "- Players will have access to the Streaming asset folder when you build your game."
                     , type: MessageType.Info);
+            }
+
+            if (GUILayout.Button("Add all terrains as object"))
+            {
+                Terrain[] allTerrains = Object.FindObjectsOfType<Terrain>();
+
+                Terrain backupTerrain = linkedTerrain;
+
+                foreach (Terrain terrain in allTerrains)
+                {
+                    linkedTerrain = terrain;
+
+                    GenerateData();
+                    AddMeshToScene();
+                }
+
+                linkedTerrain = backupTerrain;
             }
         }
 
