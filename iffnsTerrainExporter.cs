@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEditor;
-using iffnsStuff.iffnsUnityTools.CastleBuilderTools.CastleImporter;
 
 namespace iffnsStuff.iffnsUnityTools.Exporters
 {
