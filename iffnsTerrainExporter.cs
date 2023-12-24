@@ -5,7 +5,7 @@ using UnityEngine;
 using System.IO;
 using UnityEditor;
 
-namespace iffnsStuff.iffnsUnityTools.Exporters
+namespace iffnsStuff.iffnsUnityTools.TerrainTools
 {
     public class iffnsTerrainExporter : EditorWindow
     {
@@ -54,7 +54,7 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
 
                 if (GUILayout.Button("Update info"))
                 {
-                    GenerateData();
+                    GenerateDataWithSkips();
                     UpdateCount();
                 }
 
@@ -66,14 +66,35 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
 
                 if (GUILayout.Button("Add mesh to scene"))
                 {
-                    GenerateData();
+                    GenerateDataWithSkips();
                     AddMeshToScene();
                     UpdateCount();
                 }
 
                 if (GUILayout.Button("Export as .obj"))
                 {
-                    GenerateData();
+                    GenerateDataWithSkips();
+                    ExportAsMesh();
+                    UpdateCount();
+                }
+                /*
+                if (GUILayout.Button("Add hole mesh to scene (Ignores skips)"))
+                {
+                    GeneratHoleData(true);
+                    AddMeshToScene();
+                    UpdateCount();
+                }
+                */
+                if (GUILayout.Button("Export holes as .obj (Ignores skips)"))
+                {
+                    GeneratHoleData(true);
+                    ExportAsMesh();
+                    UpdateCount();
+                }
+
+                if (GUILayout.Button("Export non-holes as .obj (Ignores skips)"))
+                {
+                    GeneratHoleData(false);
                     ExportAsMesh();
                     UpdateCount();
                 }
@@ -98,7 +119,7 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
                 {
                     linkedTerrain = terrain;
 
-                    GenerateData();
+                    GenerateDataWithSkips();
                     AddMeshToScene();
                 }
 
@@ -112,7 +133,59 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
             triangleCount = triangles.Count / 3;
         }
 
-        void GenerateData()
+        void GeneratHoleData(bool holeMesh)
+        {
+            //Prepare info
+            TerrainData terrainData;
+            terrainData = linkedTerrain.terrainData;
+            int heightMapSize = terrainData.heightmapResolution;
+
+            Vector2 gridSize = new Vector2(terrainData.size.x, terrainData.size.z) * (1f / (heightMapSize - 1));
+            bool[,] holes = terrainData.GetHoles(0, 0, terrainData.holesResolution, terrainData.holesResolution);
+
+            vertices = new List<Vector3>();
+            uvs = new List<Vector2>();
+            triangles = new List<int>();
+
+            //Generate mesh data
+            for (int x = 0; x < heightMapSize; x++)
+            {
+                for (int y = 0; y < heightMapSize; y++)
+                {
+                    float height = terrainData.GetHeight(x, y);
+
+                    Vector3 vector = new Vector3(x * gridSize.x, height, y * gridSize.y);
+
+                    vertices.Add(vector);
+
+                    uvs.Add(new Vector2(vector.x, vector.z));
+                }
+            }
+
+            int outputVerticesCount = (int)Mathf.Sqrt(vertices.Count);
+
+            for (int x = 0; x < outputVerticesCount - 1; x++)
+            {
+                for (int y = 0; y < outputVerticesCount - 1; y++)
+                {
+                    if (holes[y, x] == holeMesh) continue;
+
+                    int A = outputVerticesCount * x + y;
+                    int B = outputVerticesCount * x + y + 1;
+                    int C = outputVerticesCount * (x + 1) + y + 1;
+                    int D = outputVerticesCount * (x + 1) + y;
+
+                    triangles.Add(A);
+                    triangles.Add(B);
+                    triangles.Add(C);
+                    triangles.Add(A);
+                    triangles.Add(C);
+                    triangles.Add(D);
+                }
+            }
+        }
+
+        void GenerateDataWithSkips()
         {
             //Prepare info
             TerrainData terrainData;
@@ -125,7 +198,7 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
             uvs = new List<Vector2>();
             triangles = new List<int>();
 
-            if(Skips < 0) Skips = 0;
+            if (Skips < 0) Skips = 0;
 
             //Generate mesh data
             for (int x = 0; x < heightMapSize; x += Skips + 1)
