@@ -39,9 +39,9 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
                true) as Terrain;
 
             Skips = EditorGUILayout.IntField(label: "Skips", value: Skips);
-            EditorGUILayout.HelpBox(message: "Skipping allows to reduce the ammount of verticies of the mesh by only using every nth line. Some points may be lost at the edge. To avoid skips, use 2^n-1", type: MessageType.None);
+            EditorGUILayout.HelpBox(message: "Skipping allows to reduce the amount of vertices of the mesh by only using every nth line. Some points may be lost at the edge. To avoid skips, use 2^n-1", type: MessageType.None);
 
-            if(linkedTerrain != null)
+            if (linkedTerrain != null)
             {
                 TerrainData terrainData = linkedTerrain.terrainData;
 
@@ -59,7 +59,7 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
                 }
 
                 string infoText = "Click Update info to update data" + System.Environment.NewLine;
-                infoText += "Verticies = " + ConvertIntToString(vertexCount) + System.Environment.NewLine;
+                infoText += "Vertices = " + ConvertIntToString(vertexCount) + System.Environment.NewLine;
                 infoText += "Triangles = " + ConvertIntToString(triangleCount) + System.Environment.NewLine;
 
                 EditorGUILayout.HelpBox(infoText, MessageType.Info);
@@ -83,7 +83,7 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
                 EditorGUILayout.HelpBox(
                     "Notes:" + System.Environment.NewLine +
                     "- You need to tab out and back into Unity for it to recognize newly created files and folders. " + System.Environment.NewLine +
-                    "- If you want to look at the mesh in Unity, you need to move it out of the Streaming Assets forlder." + System.Environment.NewLine +
+                    "- If you want to look at the mesh in Unity, you need to move it out of the Streaming Assets folder." + System.Environment.NewLine +
                     "- Players will have access to the Streaming asset folder when you build your game."
                     , type: MessageType.Info);
             }
