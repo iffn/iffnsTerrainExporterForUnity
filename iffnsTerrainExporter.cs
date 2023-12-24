@@ -23,7 +23,7 @@ namespace iffnsStuff.iffnsUnityTools.Exporters
         [MenuItem("Tools/iffnsStuff/WorldBuildingTools/TerrainExporter")]
         public static void ShowWindow()
         {
-            GetWindow(t: typeof(iffnsTerrainExporter), utility: false, title: "Terrain exporter");
+            GetWindow(typeof(iffnsTerrainExporter), false, "Terrain exporter");
         }
 
         void OnGUI()
